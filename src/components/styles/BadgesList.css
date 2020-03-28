@@ -1,0 +1,31 @@
+.Badge_item {
+    background-color: #fff;
+    box-shadow: 0 3px 3px 0 #eee;
+    margin-bottom: 1em;
+    padding: 18px 30px;
+}
+
+.avatar {
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 1.5em;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.info .name {
+    font-weight: bold;
+}
+
+.info .twitter {
+    color:rgb(136, 153, 166);
+    font-size: 14px;
+}
+
+.info .jobTitle {
+    font-size: 14px;
+}
