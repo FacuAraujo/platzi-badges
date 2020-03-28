@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 
-import './styles/BadgeNew.css';
+import './styles/BadgeEdit.css';
 import Badge from '../components/Badge';
 import header from '../images/platziconf-logo.svg';
 import BadgeForm from '../components/BadgeForm';
 import api from '../api';
 import PageLoading from '../components/PageLoading';
 
-class BadgeNew extends Component {
+class BadgeEdit extends Component {
     state = { 
-        loading: false,
+        loading: true,
         error: null,
         form: {
             firstName: '',
@@ -19,6 +19,22 @@ class BadgeNew extends Component {
             twitter: '',
         },
     };
+
+    componentDidMount() {
+        this.fetchData()
+    }
+
+    fetchData = async e => {
+        this.setState({ loading: true, error: null })
+
+        try {
+            const data = await api.badges.read(this.props.match.params.badgeId);
+            this.setState({ loading: false, form: data });
+
+        } catch (error) {
+            this.setState({ loading: false, error: error });
+        }
+    }
 
     handleChange = e => {
         this.setState({
@@ -35,7 +51,7 @@ class BadgeNew extends Component {
         this.setState({ loading: true, error: null, });
         
         try {
-            await api.badges.create(this.state.form);
+            await api.badges.update(this.props.match.params.badgeId, this.state.form);
             this.setState({ loading: false });
 
             // Redirigir a una ruta
@@ -52,8 +68,8 @@ class BadgeNew extends Component {
 
         return (
             <React.Fragment>
-                <div className="BadgeNew__hero">
-                    <img src={header} alt="Logo" className="img-fluid BadgeNew__hero-image"/>
+                <div className="BadgeEdit__hero">
+                    <img src={header} alt="Logo" className="img-fluid BadgeEdit__hero-image"/>
                 </div>
 
                 <div className="container">
@@ -69,7 +85,7 @@ class BadgeNew extends Component {
                             />
                         </div>
                         <div className="col">
-                            <h1>New Attendant</h1>
+                            <h1>Edit Attendant</h1>
                             <BadgeForm 
                                 onChange={this.handleChange} 
                                 onSubmit={this.handleSubmit}
@@ -84,4 +100,4 @@ class BadgeNew extends Component {
     }
 }
 
-export default BadgeNew;
+export default BadgeEdit;
